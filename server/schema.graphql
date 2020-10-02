@@ -16,6 +16,7 @@ type User {
   id: ID!
   email: String!
   trips: [Launch]!
+  token: String
 }
 
 type Mission {
@@ -29,14 +30,14 @@ enum PatchSize {
 }
 
 type Query {
-  launches: [Launch]!
+  launches(pageSize: Int, after: String): LaunchConnection!
   launch(id: ID!): Launch
   me: User
 }
 
 type Mutation {
   bookTrips(launchIds: [ID]!): TripUpdateResponse!
-  cancelTrips(launchIds: ID!): TripUpdateResponse!
+  cancelTrip(launchIds: ID!): TripUpdateResponse!
   login(email: String): String #login token
 }
 
@@ -44,4 +45,10 @@ type TripUpdateResponse {
   success: Boolean!
   message: String
   launches: [Launch]
+}
+
+type LaunchConnection {
+  cursor: String!
+  hasMore: Boolean!
+  launches: [Launch]!
 }

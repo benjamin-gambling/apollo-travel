@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+model User {
+  id    Int     @default(autoincrement()) @id
+  email String  @unique
+  token String?
+  trips Trip[]
+}
+
+model Trip {
+  id       Int  @default(autoincrement()) @id
+  launchId Int
+  userId   Int
+  User     User @relation(fields: [userId], references: [id])
+
+  @@unique([launchId, userId], name: "launchId_userId")
+}
