@@ -1,8 +1,8 @@
-# Github Lookup
+# Apollo Travel
 
-This project invloved me learning more about GraphQL and working with Apollo. I created a basic app where you can look up a Github user and it only retrives basic info from the API call by using the apollo server and axios.
+This project was a
 
-# ![Github Lookup](readme_img/screenshot.png)
+# ![Apollo Travel](readme_img/screenshot.png)
 
 ## Table of contents
 
@@ -15,7 +15,7 @@ This project invloved me learning more about GraphQL and working with Apollo. I 
 ## Demo
 
 Here is the working live demo:
-[https://bgwd-github-lookup.herokuapp.com/](https://bgwd-github-lookup.herokuapp.com/).
+[https://apollo-travel.herokuapp.com/](https://apollo-travel.herokuapp.com/).
 
 ## Technologies
 
@@ -27,7 +27,8 @@ Client
 Server
 
 - Node.js
-- Apollo Server
+- Prisma
+- GraphQl Yoga
 
 ## Features
 
