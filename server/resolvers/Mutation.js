@@ -15,13 +15,10 @@ const login = async (parent, { email: emailArgs }, context, info) => {
     },
   });
 
-  console.log(user);
   if (user) return user.token;
 };
 
 const bookTrips = async (parent, { launchIds }, context, info) => {
-  console.log(launchIds, context.user.id);
-
   const userId = await context.user.id;
   if (!userId) return;
 
@@ -67,13 +64,13 @@ const bookTrips = async (parent, { launchIds }, context, info) => {
   };
 };
 
-const cancelTrip = async (parent, args, context, info) => {
+const cancelTrip = async (parent, { launchId }, context, info) => {
   const userId = await context.user.id;
 
-  const result = await !!context.prisma.trip.delete({
+  const result = await context.prisma.trip.delete({
     where: {
       launchId_userId: {
-        launchId: args.launchId,
+        launchId: Number(launchId),
         userId,
       },
     },
@@ -85,9 +82,9 @@ const cancelTrip = async (parent, args, context, info) => {
       message: "Houston, we have a problem! We failed to cancel the trip",
     };
 
-  const launch = await context.datasources.launchAPI.getlaunchById(
-    args.launchId
-  );
+  const launch = await context.datasources.launchAPI.getLaunchById({
+    launchId,
+  });
 
   return {
     success: true,
@@ -95,8 +92,6 @@ const cancelTrip = async (parent, args, context, info) => {
     launches: [launch],
   };
 };
-
-//   cancelTrip,
 
 module.exports = {
   bookTrips,

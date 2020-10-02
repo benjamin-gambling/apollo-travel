@@ -5,8 +5,6 @@ const isBooked = async (launch, args, context, info) => {
     return false;
   }
 
-  console.log(context.user);
-
   const launchId = launch.id;
   const userId = context.user.id;
   const found = await context.prisma.trip.findOne({
@@ -18,9 +16,7 @@ const isBooked = async (launch, args, context, info) => {
     },
   });
 
-  console.log(found);
-
-  return found && found.length > 0;
+  return found ? true : false;
 };
 
 module.exports = {
