@@ -11,6 +11,8 @@ const Mutation = require("./resolvers/Mutation");
 
 const LaunchAPI = require("./datasources/launch");
 
+require("dotenv").config();
+
 const datasources = {
   launchAPI: new LaunchAPI(),
 };
@@ -54,6 +56,14 @@ const server = new GraphQLServer({
   },
 });
 
-const PORT = process.env.PORT || 4000;
+const options = {
+  port: process.env.PORT || 4000,
+  tracing: "enabled",
+  // endpoint: '/graphql',
+  // subscriptions: '/subscriptions',
+  // playground: '/playground',
+};
 
-server.start(() => console.log(`Server started on port ${PORT}`));
+server.start(options, ({ port }) =>
+  console.log(`Server started on port ${port}`)
+);
