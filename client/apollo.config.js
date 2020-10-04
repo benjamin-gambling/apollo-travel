@@ -1,5 +1,6 @@
 module.exports = {
-  service: {
-    name: "apollo-travel",
+  client: {
+    name: "Apollo Travel [web]",
+    service: "apollo-travel",
   },
 };

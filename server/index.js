@@ -1,5 +1,6 @@
-const { GraphQLServer } = require("graphql-yoga");
+const { ApolloServer, gql } = require("apollo-server");
 const { PrismaClient } = require("@prisma/client");
+const { importSchema } = require("graphql-import");
 
 const isEmail = require("isemail");
 
@@ -11,7 +12,10 @@ const Mutation = require("./resolvers/Mutation");
 
 const LaunchAPI = require("./datasources/launch");
 
-require("dotenv").config();
+const importedTypeDefs = importSchema(__dirname + "/schema.graphql");
+const typeDefs = gql`
+  ${importedTypeDefs}
+`;
 
 const datasources = {
   launchAPI: new LaunchAPI(),
@@ -27,11 +31,11 @@ const resolvers = {
 
 const prisma = new PrismaClient();
 
-const server = new GraphQLServer({
-  typeDefs: "./server/schema.graphql",
+const server = new ApolloServer({
+  typeDefs,
   resolvers,
-  context: async ({ request }) => {
-    const auth = (request.headers && request.headers.authorization) || "";
+  context: async ({ req }) => {
+    const auth = (req.headers && req.headers.authorization) || "";
     const email = Buffer.from(auth, "base64").toString("ascii");
 
     let user;
@@ -48,7 +52,7 @@ const server = new GraphQLServer({
       : (user = null);
 
     return {
-      request,
+      req,
       datasources,
       prisma,
       user,
@@ -56,14 +60,6 @@ const server = new GraphQLServer({
   },
 });
 
-const options = {
-  port: process.env.PORT || 4000,
-  tracing: "enabled",
-  // endpoint: '/graphql',
-  // subscriptions: '/subscriptions',
-  // playground: '/playground',
-};
-
-server.start(options, ({ port }) =>
-  console.log(`Server started on port ${port}`)
-);
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  console.log(`🚀 app running at ${url}`);
+});

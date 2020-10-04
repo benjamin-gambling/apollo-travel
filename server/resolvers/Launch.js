@@ -1,7 +1,6 @@
 const isBooked = async (launch, args, context, info) => {
   // user logged in??
   if (!context.user) {
-    console.log("context user returned false ");
     return false;
   }
 

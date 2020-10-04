@@ -16,7 +16,7 @@ const trips = async (parent, args, context, info) => {
     return [];
   }
 
-  return context.datasources.launchAPI.getLaunchByIds({ launchIds });
+  return context.datasources.launchAPI.getLaunchesByIds({ launchIds });
 };
 
 module.exports = {

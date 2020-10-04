@@ -1,4 +1,5 @@
 const { paginateResults } = require("../utils");
+const isEmail = require("isemail");
 
 const launches = async (
   parent,
@@ -25,13 +26,25 @@ const launches = async (
   };
 };
 
-const launch = (parent, args, { datasources }, info) => {
-  return datasources.launchAPI.getLaunchById({ launchId: args.id });
+const launch = async (parent, args, { datasources }, info) => {
+  return await datasources.launchAPI.getLaunchById({ launchId: args.id });
 };
 
-const me = (parent, args, context, info) => {
-  //   context.resolvers.userAPI.findOrCreateUser()
-  console.log(context, context.datasources);
+const me = async (parent, args, context, info) => {
+  if (!context.user) return null;
+  const email = context.user.email;
+  if (!email || !isEmail.validate(email)) return null;
+
+  const user = await context.prisma.user.upsert({
+    where: { email },
+    update: {},
+    create: {
+      email,
+      token: Buffer.from(email).toString("base64"),
+    },
+  });
+
+  return user;
 };
 
 module.exports = { launches, launch, me };

@@ -1,8 +1,6 @@
 const isEmail = require("isemail");
 
 const login = async (parent, { email: emailArgs }, context, info) => {
-  console.log(emailArgs, context);
-
   const email = context.user ? context.user.email : emailArgs;
   if (!email || !isEmail.validate(email)) return null;
 
