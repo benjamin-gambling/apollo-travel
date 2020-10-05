@@ -13,6 +13,10 @@ import space5 from "../assets/images/space5.jpg";
 import space6 from "../assets/images/space6.jpg";
 import space7 from "../assets/images/space7.jpg";
 import space8 from "../assets/images/space8.jpg";
+import space9 from "../assets/images/space10.jpg";
+import space10 from "../assets/images/space11.jpg";
+import falcon9 from "../assets/images/falcon9.jpg";
+import falcon9alt from "../assets/images/falcon9alt.jpg";
 
 import { unit } from "../styles";
 
@@ -24,17 +28,26 @@ const backgrounds = [
   space2,
   space3,
   space4,
+  falcon9,
   space5,
   space6,
   space7,
   space8,
+  falcon9alt,
+  space9,
+  space10,
 ];
 export function getBackgroundImage(id: string) {
   return `url(${backgrounds[Number(id) % backgrounds.length]})`;
 }
 
 export default ({ launch }: any) => {
-  const { id, mission, rocket } = launch;
+  const { id, mission, rocket, time } = launch;
+  const launchTime = +time * 1000;
+  const countdown = Math.floor(
+    (launchTime - Date.now()) / (60 * 60 * 24) / 1000
+  );
+
   return (
     <StyledLink
       to={`/launch/${id}`}
@@ -46,8 +59,14 @@ export default ({ launch }: any) => {
         ), ${getBackgroundImage(id)}`,
       }}
     >
-      <h3>{mission.name}</h3>
-      <h5>{rocket.name}</h5>
+      <div>
+        <h3>{mission.name}</h3>
+        <h5>{rocket.name}</h5>
+      </div>
+      <h6 className={LaunchTimeClass}>
+        {`${new Date(launchTime)}`}
+        {countdown >= -1 ? ` - ${countdown} Days till launch!` : null}
+      </h6>
     </StyledLink>
   );
 };
@@ -62,11 +81,18 @@ export const cardClassName = css({
   color: "white",
   backgroundSize: "cover",
   backgroundPosition: "center",
+  justifyContent: "space-between",
+});
+
+export const LaunchTimeClass = css({
+  color: "white",
+  textAlign: "right",
 });
 
 const padding = unit * 2;
 const StyledLink = styled(Link)(cardClassName, {
-  display: "block",
+  display: "flex",
+  flexDirection: "column",
   height: 193,
   marginTop: padding,
   textDecoration: "none",

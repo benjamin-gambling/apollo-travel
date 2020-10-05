@@ -53,4 +53,8 @@ export default () =>
       textTransform: "uppercase",
       letterSpacing: 4,
     },
+    h6: {
+      textTransform: "uppercase",
+      fontSize: 12,
+    },
   });

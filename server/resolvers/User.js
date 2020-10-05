@@ -8,10 +8,6 @@ const trips = async (parent, args, context, info) => {
       ? launches.map((launch) => launch.launchId)
       : [];
 
-  console.log(launchIds);
-  //   Elimtates the none true values
-  console.log(launchIds.filter((ea) => !!ea));
-
   if (!launchIds.length) {
     return [];
   }

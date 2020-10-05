@@ -9,6 +9,7 @@ export const LAUNCH_TILE_DATA = gql`
   fragment LaunchTile on Launch {
     __typename
     id
+    time
     isBooked
     rocket {
       id

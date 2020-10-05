@@ -1,5 +1,6 @@
 type Launch {
   id: ID!
+  time: String
   site: String
   mission: Mission
   rocket: Rocket
