@@ -1,8 +1,10 @@
-const { ApolloServer, gql } = require("apollo-server");
+const express = require("express");
+const { ApolloServer, gql } = require("apollo-server-express");
 const { PrismaClient } = require("@prisma/client");
 const { importSchema } = require("graphql-import");
 
 const isEmail = require("isemail");
+const cors = require("cors");
 
 const Query = require("./resolvers/Query");
 const Mission = require("./resolvers/Mission");
@@ -31,6 +33,13 @@ const resolvers = {
 
 const prisma = new PrismaClient();
 
+const app = express();
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -58,8 +67,11 @@ const server = new ApolloServer({
       user,
     };
   },
+  cors: corsOptions,
 });
 
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-  console.log(`🚀 app running at ${url}`);
-});
+server.applyMiddleware({ app });
+
+app.listen({ port: process.env.PORT || 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000`)
+);

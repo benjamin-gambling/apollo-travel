@@ -19,7 +19,7 @@ import { resolvers, typeDefs } from "./resolvers";
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "http://localhost:4000/",
+    uri: "http://localhost:4000/graphql",
     headers: {
       authorization: localStorage.getItem("token") || "",
     },
