@@ -7,9 +7,8 @@
     "node": "14.11.0"
   },
   "scripts": {
-    "test": "jest",
-    "start": "nodemon server/index.js",
-    "start:ci": "node src/index.js"
+    "start": "node server/app.js",
+    "build": "cd client/ && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
