@@ -46,7 +46,9 @@ const Launch: React.FC<LaunchProps> = ({ launchId }) => {
         {data && data.launch && data.launch.mission && data.launch.mission.name}
       </Header>
       <LaunchDetail {...data.launch} />
-      <ActionButton {...data.launch} />
+      {data && data.launch && +data.launch.time * 1000 > Date.now() ? (
+        <ActionButton {...data.launch} />
+      ) : null}
     </Fragment>
   );
 };

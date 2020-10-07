@@ -54,8 +54,8 @@ export default ({ launch }: any) => {
       style={{
         backgroundImage: `linear-gradient(
           to bottom,
-          rgba(0, 0, 0, 0.4),
-          rgb(0, 0, 0, 0.1) 
+          rgba(0, 0, 0, 0.25),
+          rgb(0, 0, 0, 0.75) 
         ), ${getBackgroundImage(id)}`,
       }}
     >
@@ -65,7 +65,11 @@ export default ({ launch }: any) => {
       </div>
       <h6 className={LaunchTimeClass}>
         {`${new Date(launchTime)}`}
-        {countdown >= -1 ? ` - ${countdown} Days till launch!` : null}
+        {countdown >= -0
+          ? ` - ${countdown} Days till launch!`
+          : countdown === -1
+          ? ` - Today! 🚀 `
+          : null}
       </h6>
     </StyledLink>
   );

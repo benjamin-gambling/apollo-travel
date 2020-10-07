@@ -19,7 +19,7 @@ import { resolvers, typeDefs } from "./resolvers";
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "http://localhost:4000/graphql",
+    uri: "https://apollo-travel.herokuapp.com/graphql",
     headers: {
       authorization: localStorage.getItem("token") || "",
     },
@@ -49,7 +49,6 @@ const IS_LOGGED_IN = gql`
 
 function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
-
   return data.isLoggedIn ? <Pages /> : <Login />;
 }
 

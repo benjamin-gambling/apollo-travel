@@ -51,9 +51,9 @@ const Launches: React.FC<LaunchesProps> = () => {
       <Header />
       {data.launches &&
         data.launches.launches &&
-        data.launches.launches.map((launch: any) => (
-          <LaunchTile key={launch.id} launch={launch} />
-        ))}
+        [...data.launches.launches]
+          .sort((a: any, b: any) => +b.time - +a.time)
+          .map((launch: any) => <LaunchTile key={launch.id} launch={launch} />)}
       {data.launches && data.launches.hasMore && (
         <Button
           onClick={() =>

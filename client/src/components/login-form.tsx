@@ -21,7 +21,7 @@ export default class LoginForm extends Component<
   state = { email: "" };
 
   onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const email = (event.target as HTMLInputElement).value;
+    const email = (event.target as HTMLInputElement).value.toLowerCase();
     this.setState((s) => ({ email }));
   };
 

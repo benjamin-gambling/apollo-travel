@@ -24,6 +24,7 @@ export interface LaunchDetails_launch {
   __typename: "Launch";
   isInCart: boolean;
   site: string | null;
+  time: string;
   rocket: LaunchDetails_launch_rocket | null;
   id: string;
   isBooked: boolean;

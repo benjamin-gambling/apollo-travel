@@ -13,7 +13,7 @@ const login = async (parent, { email: emailArgs }, context, info) => {
     },
   });
 
-  if (user) return user.token;
+  if (user) return Buffer.from(email).toString("base64");
 };
 
 const bookTrips = async (parent, { launchIds }, context, info) => {

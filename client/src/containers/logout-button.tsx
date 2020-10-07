@@ -11,11 +11,12 @@ export default function LogoutButton() {
   return (
     <StyledButton
       onClick={() => {
+        client.cache.reset();
+        localStorage.clear();
         client.writeQuery({
           query: LOGGED_IN_STATUS,
           data: { isLoggedIn: false },
         });
-        localStorage.clear();
       }}
     >
       <ExitIcon />

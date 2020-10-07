@@ -36,7 +36,7 @@ const prisma = new PrismaClient();
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://apollo-travel.herokuapp.com/",
   credentials: true,
 };
 
@@ -72,6 +72,6 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-app.listen({ port: process.env.PORT || 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000`)
-);
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => console.log(`🚀 Server ready at ${PORT}`));

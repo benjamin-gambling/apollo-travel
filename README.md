@@ -28,7 +28,7 @@ Server
 
 - Node.js
 - Prisma
-- GraphQl Yoga
+- Apollo Server
 
 ## Features
 
